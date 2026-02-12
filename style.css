@@ -11,7 +11,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow: hidden; /* Prevents giant images from creating scrollbars */
     background-image: 
         radial-gradient(circle at 15% 85%, #ffb3c1 0%, transparent 40%),
         radial-gradient(circle at 85% 15%, #ff8fa3 0%, transparent 40%);
@@ -28,60 +28,104 @@ body {
 /* --- MAIN CONTAINER --- */
 .container {
     position: relative;
-    z-index: 500; /* Extremely high to stay above 800px images */
+    z-index: 1000; /* Stays above the massive images */
     text-align: center;
-    background: rgba(255, 255, 255, 0.4); /* Slight blur/tint to keep text readable */
-    backdrop-filter: blur(5px);
-    padding: 30px;
-    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.6); 
+    backdrop-filter: blur(8px);
+    padding: 40px;
+    border-radius: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 h1 {
     color: #d63384;
-    font-size: 2.4rem;
+    font-size: 2.8rem;
     margin-bottom: 20px;
     font-weight: 900;
 }
 
 #cat-gif {
-    width: 220px;
-    height: 220px;
+    width: 250px;
+    height: 250px;
     margin-bottom: 20px;
 }
 
 /* --- BUTTONS --- */
 .buttons {
     display: flex;
-    gap: 20px;
+    gap: 30px;
     justify-content: center;
-    align-items: center;
 }
 
 #yes-btn {
     background: #4CAF50;
     color: white;
     border: none;
-    padding: 15px 45px;
-    border-radius: 15px;
-    font-size: 1.6rem;
+    padding: 20px 60px;
+    border-radius: 20px;
+    font-size: 1.8rem;
     font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 #no-btn {
     background: #e74c3c;
     color: white;
     border: none;
-    padding: 12px 28px;
-    border-radius: 10px;
+    padding: 12px 30px;
+    border-radius: 12px;
     cursor: pointer;
-    position: relative;
-    z-index: 600;
 }
 
-/* --- GIANT PHOTO STYLING --- */
-[Image of CSS box model for image dimensions]
+/* --- MASSIVE 800PX PHOTO STYLING --- */
+
 .side-pic, .side-pic-2 {
     position: fixed;
-    width: 80
+    width: 800px !important;   /* Forced size */
+    height: 800px !important;  /* Forced size */
+    min-width: 800px;
+    min-height: 800px;
+    object-fit: cover; /* Ensures photo fills the 800px square without stretching */
+    border: 12px solid white; 
+    border-radius: 15px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    z-index: 5; 
+    transition: opacity 2s ease;
+}
+
+.side-pic { opacity: 0.9; }
+.side-pic-2 { opacity: 0; }
+
+.fade-out { opacity: 0 !important; }
+.fade-in { opacity: 0.9 !important; }
+
+/* --- POSITIONS FOR 800PX IMAGES --- */
+/* These are positioned to "frame" the corners of the screen */
+.pic-1 { left: -200px; top: -150px; transform: rotate(-12deg); }
+.pic-2 { right: -200px; top: -150px; transform: rotate(12deg); }
+.pic-3 { left: -250px; bottom: -200px; transform: rotate(8deg); }
+.pic-4 { right: -250px; bottom: -200px; transform: rotate(-10deg); }
+
+/* The 5th pic stays central but deep in the background */
+.pic-5 { 
+    left: 50%; 
+    top: 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 1; 
+    opacity: 0.3; 
+}
+
+/* --- MUSIC TOGGLE --- */
+#music-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2000;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
