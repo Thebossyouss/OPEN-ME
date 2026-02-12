@@ -131,20 +131,20 @@ window.addEventListener('load', function() {
     const set1 = document.querySelectorAll('.side-pic');
     const set2 = document.querySelectorAll('.side-pic-2');
 
-    // 1. After 5 seconds, fade out the first set (Photos 1-5)
+    // 1. Wait 5 seconds (5000), then fade out the first set
     setTimeout(function() {
         set1.forEach(pic => pic.classList.add('fade-out'));
         
-        // 2. Wait 1.5 seconds for the fade-out to finish, then show the second set (Photos 6-10)
+        // 2. Wait 1.5 seconds for fade-out, then show the second set
         setTimeout(function() {
             set2.forEach(pic => pic.classList.add('fade-in'));
 
-            // 3. Optional: Fade out the second set after another 5 seconds
+            // 3. Keep second set for 5 seconds (5000), then fade out
             setTimeout(function() {
                 set2.forEach(pic => pic.classList.remove('fade-in'));
-            }, 30000); // Change this 5000 if you want the second set to stay longer
+            }, 5000); 
 
         }, 1500); 
 
-    }, 15000); // Change this 5000 to make the first set stay longer/shorter
+    }, 5000); // This was 15000 (15 seconds), now it's 5000 (5 seconds)
 });
