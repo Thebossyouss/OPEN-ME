@@ -11,35 +11,28 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Prevents giant images from creating scrollbars */
+    overflow: hidden; /* This is crucial to prevent scrollbars with giant images */
     background-image: 
         radial-gradient(circle at 15% 85%, #ffb3c1 0%, transparent 40%),
         radial-gradient(circle at 85% 15%, #ff8fa3 0%, transparent 40%);
 }
 
-/* --- BACKGROUND --- */
-.hearts-bg {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    z-index: 0;
-}
-
 /* --- MAIN CONTAINER --- */
 .container {
     position: relative;
-    z-index: 1000; /* Stays above the massive images */
+    z-index: 1000; 
     text-align: center;
-    background: rgba(255, 255, 255, 0.6); 
-    backdrop-filter: blur(8px);
-    padding: 40px;
+    background: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(10px);
+    padding: 50px;
     border-radius: 40px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    max-width: 90%;
 }
 
 h1 {
     color: #d63384;
-    font-size: 2.8rem;
+    font-size: clamp(1.5rem, 5vw, 2.8rem); /* Responsive text size */
     margin-bottom: 20px;
     font-weight: 900;
 }
@@ -77,18 +70,21 @@ h1 {
     cursor: pointer;
 }
 
-/* --- MASSIVE 800PX PHOTO STYLING --- */
+/* --- FORCED GIANT PHOTO STYLING --- */
 
 .side-pic, .side-pic-2 {
     position: fixed;
-    width: 800px !important;   /* Forced size */
-    height: 800px !important;  /* Forced size */
-    min-width: 800px;
-    min-height: 800px;
-    object-fit: cover; /* Ensures photo fills the 800px square without stretching */
-    border: 12px solid white; 
-    border-radius: 15px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    /* Use vw (viewport width) to force them to be huge regardless of screen size */
+    width: 60vw !important; 
+    height: 60vw !important;
+    max-width: 800px; /* Limits it on huge desktop monitors */
+    max-height: 800px;
+    min-width: 400px; /* Ensures it stays big on small phones */
+    
+    object-fit: cover; 
+    border: 15px solid white; 
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
     z-index: 5; 
     transition: opacity 2s ease;
 }
@@ -96,36 +92,24 @@ h1 {
 .side-pic { opacity: 0.9; }
 .side-pic-2 { opacity: 0; }
 
-.fade-out { opacity: 0 !important; }
-.fade-in { opacity: 0.9 !important; }
+.fade-out { opacity: 0 !important; visibility: hidden; }
+.fade-in { opacity: 0.9 !important; visibility: visible !important; }
 
-/* --- POSITIONS FOR 800PX IMAGES --- */
-/* These are positioned to "frame" the corners of the screen */
-.pic-1 { left: -200px; top: -150px; transform: rotate(-12deg); }
-.pic-2 { right: -200px; top: -150px; transform: rotate(12deg); }
-.pic-3 { left: -250px; bottom: -200px; transform: rotate(8deg); }
-.pic-4 { right: -250px; bottom: -200px; transform: rotate(-10deg); }
+/* --- POSITIONS --- */
+/* We move them partially off-screen so they frame the center */
+.pic-1 { left: -10vw; top: -5vh; transform: rotate(-10deg); }
+.pic-2 { right: -10vw; top: -5vh; transform: rotate(10deg); }
+.pic-3 { left: -15vw; bottom: -10vh; transform: rotate(5deg); }
+.pic-4 { right: -15vw; bottom: -10vh; transform: rotate(-8deg); }
 
-/* The 5th pic stays central but deep in the background */
+/* Central deep background photo */
 .pic-5 { 
     left: 50%; 
     top: 50%; 
     transform: translate(-50%, -50%); 
     z-index: 1; 
-    opacity: 0.3; 
-}
-
-/* --- MUSIC TOGGLE --- */
-#music-toggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 2000;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: white;
+    opacity: 0.2; 
+    width: 90vw !important;
+    height: 90vh !important;
     border: none;
-    cursor: pointer;
-    font-size: 1.5rem;
 }
