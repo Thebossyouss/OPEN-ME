@@ -18,7 +18,7 @@ body {
         radial-gradient(circle at 50% 50%, #fff0f3 0%, transparent 60%);
 }
 
-/* Floating hearts background */
+/* --- HEARTS BACKGROUND --- */
 .hearts-bg {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -50,9 +50,10 @@ body {
     to { transform: translateY(-110vh); opacity: 0; }
 }
 
+/* --- CONTAINER & TEXT --- */
 .container {
     position: relative;
-    z-index: 1;
+    z-index: 10; /* Ensures text/buttons stay ABOVE the images */
     text-align: center;
     padding: 40px 20px;
 }
@@ -85,6 +86,7 @@ h1 {
     transition: opacity 0.3s ease;
 }
 
+/* --- BUTTONS --- */
 .buttons {
     display: flex;
     gap: 20px;
@@ -114,10 +116,6 @@ h1 {
     box-shadow: 0 10px 28px rgba(76, 175, 80, 0.55);
 }
 
-#yes-btn:active {
-    transform: scale(0.98);
-}
-
 #no-btn {
     background: linear-gradient(135deg, #e74c3c, #c0392b);
     color: white;
@@ -136,25 +134,7 @@ h1 {
     background: linear-gradient(135deg, #c0392b, #a93226);
 }
 
-
-#tease-toast {
-    margin-top: 14px;
-    font-size: 1rem;
-    color: #d63384;
-    font-weight: 700;
-    font-style: italic;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    min-height: 1.5rem;
-}
-
-#tease-toast.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Music toggle button */
+/* --- MUSIC TOGGLE --- */
 #music-toggle {
     position: fixed;
     bottom: 20px;
@@ -176,69 +156,10 @@ h1 {
     transform: scale(1.1);
 }
 
-/* Yes page specific */
-.yes-container h1.yes-title {
-    font-size: 2.8rem;
-    animation: bounceTitle 0.6s ease infinite alternate;
-}
+/* --- SIDE PICTURES (The Important Part) --- */
 
-@keyframes bounceTitle {
-    from { transform: translateY(0) rotate(-1deg); }
-    to { transform: translateY(-12px) rotate(1deg); }
-}
-
-.yes-message {
-    font-size: 1.4rem;
-    color: #e91e8c;
-    font-weight: 700;
-    margin-top: 24px;
-    animation: fadeIn 1s ease 0.5s both;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.yes-container #cat-gif {
-    width: 260px;
-    height: 260px;
-}
-.side-pic {
-    position: fixed;
-    width: 120px; /* Small and neat */
-    height: 120px;
-    object-fit: cover;
-    border: 4px solid white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    z-index: 0; /* Behind the buttons and cat */
-    transition: opacity 1.5s ease;
-}
-
-/* LEFT SIDE */
-.pic-1 { left: 25px; top: 15%; transform: rotate(-6deg); }
-.pic-3 { left: 35px; top: 60%; transform: rotate(4deg); }
-
-/* RIGHT SIDE */
-.pic-2 { right: 25px; top: 15%; transform: rotate(6deg); }
-.pic-4 { right: 35px; top: 60%; transform: rotate(-4deg); }
-
-/* BOTTOM CENTER (Slightly offset) */
-.pic-5 { left: 50%; bottom: 10%; transform: translateX(-150%) rotate(-2deg); }
-
-/* Fade out effect */
-.fade-out {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* Hides them on small mobile screens */
-@media (max-width: 768px) {
-    .side-pic { display: none; }
-}
-/* Styles for the second set */
-.side-pic-2 {
+/* Shared Styles for BOTH sets */
+.side-pic, .side-pic-2 {
     position: fixed;
     width: 120px;
     height: 120px;
@@ -246,12 +167,40 @@ h1 {
     border: 4px solid white;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    z-index: 0;
-    opacity: 0; /* Hidden initially */
-    transition: opacity 1.5s ease; /* Smooth fade in/out */
+    z-index: 1; /* Behind buttons */
+    transition: opacity 1.5s ease;
 }
 
-/* Class to make them appear */
+/* Set 1: Visible by default */
+.side-pic {
+    opacity: 1;
+}
+
+/* Set 2: Hidden by default */
+.side-pic-2 {
+    opacity: 0;
+}
+
+/* Positioning (Applies to both sets) */
+.pic-1 { left: 25px; top: 15%; transform: rotate(-6deg); }
+.pic-2 { right: 25px; top: 15%; transform: rotate(6deg); }
+.pic-3 { left: 35px; top: 60%; transform: rotate(4deg); }
+.pic-4 { right: 35px; top: 60%; transform: rotate(-4deg); }
+.pic-5 { left: 50%; bottom: 10%; transform: translateX(-150%) rotate(-2deg); }
+
+/* Animation Helpers */
+.fade-out {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
 .fade-in {
     opacity: 1 !important;
+}
+
+/* Hide ALL pics on small mobile screens */
+@media (max-width: 768px) {
+    .side-pic, .side-pic-2 {
+        display: none !important;
+    }
 }
