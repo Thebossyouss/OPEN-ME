@@ -234,4 +234,14 @@ h1 {
     .side-pic {
         display: none;
     }
+}.pic-4 { 
+    right: 40px; 
+    top: 60%; 
+    transform: rotate(-3deg); 
+}
+
+.pic-5 { 
+    left: 50%; 
+    top: 10%; 
+    transform: translateX(-50%) rotate(2deg); /* This one sits near the top center */
 }
