@@ -13,7 +13,7 @@ const yesBtn = document.getElementById('yes-btn');
 const noBtn = document.getElementById('no-btn');
 const catGif = document.getElementById('cat-gif');
 
-// Music fix: Start on first click
+// Music fix: Unmute/Play on first interaction
 document.addEventListener('click', () => {
     music.play().catch(() => {});
 }, { once: true });
@@ -22,7 +22,9 @@ function toggleMusic() {
     if (music.paused) { music.play(); } else { music.pause(); }
 }
 
-function handleYesClick() { window.location.href = 'yes.html'; }
+function handleYesClick() { 
+    window.location.href = 'yes.html'; 
+}
 
 function handleNoClick() {
     noClickCount++;
@@ -31,18 +33,20 @@ function handleNoClick() {
     }
     // Change GIF
     catGif.src = gifStages[Math.min(noClickCount, gifStages.length - 1)];
-    // Grow Yes
-    const size = 1.2 + (noClickCount * 0.2);
+    // Grow Yes Button
+    const size = 1 + (noClickCount * 0.3);
     yesBtn.style.transform = `scale(${size})`;
-    // Runaway
+    // Runaway Logic
     if (noClickCount >= 4) {
         noBtn.style.position = 'fixed';
-        noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-        noBtn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+        const x = Math.random() * (window.innerWidth - 100);
+        const y = Math.random() * (window.innerHeight - 50);
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
     }
 }
 
-// Slideshow
+// Slideshow Logic
 window.onload = () => {
     const s1 = document.querySelectorAll('.side-pic');
     const s2 = document.querySelectorAll('.side-pic-2');
