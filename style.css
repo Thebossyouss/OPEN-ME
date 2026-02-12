@@ -204,3 +204,34 @@ h1 {
     width: 260px;
     height: 260px;
 }
+/* --- NEW CODE FOR MAII'S PICS --- */
+
+.side-pic {
+    position: fixed;
+    width: 160px; 
+    height: 160px;
+    object-fit: cover;
+    border: 6px solid white; 
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    z-index: 1; 
+    transition: opacity 1.5s ease; /* This makes the fading smooth */
+}
+
+/* Positioning the 3 pics */
+.pic-1 { left: 20px; top: 15%; transform: rotate(-5deg); }
+.pic-2 { right: 20px; top: 20%; transform: rotate(5deg); }
+.pic-3 { left: 30px; top: 65%; transform: rotate(3deg); }
+
+/* This is the magic "invisible" class */
+.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Hide on phones so it doesn't get crowded */
+@media (max-width: 800px) {
+    .side-pic {
+        display: none;
+    }
+}
