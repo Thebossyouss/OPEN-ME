@@ -15,23 +15,19 @@ body {
     overflow: hidden; 
 }
 
-/* --- THE MAIN CONTAINER (BUTTON BOX) --- */
+/* --- THE MAIN CONTAINER (THIS IS YOUR BUTTON BOX) --- */
 .container {
-    position: absolute; /* Changed to absolute to lock in center */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 9999 !important; /* Forces buttons to the front */
+    position: relative;
+    z-index: 9999 !important; /* Forces it to the very front */
     text-align: center;
     background: rgba(255, 255, 255, 0.9); 
     padding: 30px;
     border-radius: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    width: 350px;
-    pointer-events: auto; /* Ensures you can click the buttons */
+    width: 350px; /* Fixed width so it stays centered */
 }
 
-/* --- THE PICTURES (300PX) --- */
+/* --- THE PICTURES (FIXED AT 300PX) --- */
 .side-pic, .side-pic-2 {
     position: fixed !important;
     width: 300px !important;   
@@ -40,40 +36,33 @@ body {
     border: 8px solid white !important; 
     border-radius: 15px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    z-index: 1; /* Keeps photos BEHIND the buttons */
-    pointer-events: none; /* Crucial: clicks go through photos to buttons */
+    z-index: 1; /* Keeps them in the background */
     transition: opacity 1.5s ease-in-out !important;
+    pointer-events: none; /* Allows clicks to go THROUGH images to the buttons */
 }
 
-/* Position photos far in the corners */
+/* Tucked into the far corners so they don't block the middle */
 .pic-1 { left: 10px; top: 10px; transform: rotate(-5deg); }
 .pic-2 { right: 10px; top: 10px; transform: rotate(5deg); }
 .pic-3 { left: 10px; bottom: 10px; transform: rotate(3deg); }
 .pic-4 { right: 10px; bottom: 10px; transform: rotate(-3deg); }
 
-/* Centered photo set to background depth */
+/* The 5th photo stays very light in the center background */
 .pic-5 { 
     left: 50%; 
     top: 50%; 
     transform: translate(-50%, -50%); 
     opacity: 0.1 !important; 
-    z-index: 0; 
+    z-index: 0;
 }
 
-/* Animation States */
+/* --- TRANSITION STATES --- */
 .side-pic { opacity: 1; visibility: visible; }
 .side-pic-2 { opacity: 0; visibility: hidden; }
+
 .fade-out { opacity: 0 !important; visibility: hidden !important; }
 .fade-in { opacity: 1 !important; visibility: visible !important; }
 
-/* Button Styling */
-#yes-btn, #no-btn {
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    margin: 10px;
-}
-#yes-btn { background-color: #4CAF50; color: white; }
-#no-btn { background-color: #e74c3c; color: white; }
+/* Button Styles */
+#yes-btn { background: #4CAF50; color: white; border: none; padding: 10px 25px; border-radius: 10px; cursor: pointer; }
+#no-btn { background: #e74c3c; color: white; border: none; padding: 10px 25px; border-radius: 10px; cursor: pointer; }
