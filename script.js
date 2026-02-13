@@ -27,20 +27,31 @@ function handleNoClick() {
     const scale = 1 + (noClickCount * 0.4);
     yesBtn.style.transform = `scale(${scale})`;
 
-    // Percentage-based movement so it never leaves the screen
+    // DYNAMIC SCREEN CALCULATION
     if (noClickCount >= 4) {
         noBtn.style.position = 'fixed';
-        // Bounds the button between 10% and 80% of the screen width/height
-        const randomX = Math.floor(Math.random() * 70) + 10; 
-        const randomY = Math.floor(Math.random() * 70) + 10; 
         
-        noBtn.style.left = randomX + "vw";
-        noBtn.style.top = randomY + "vh";
+        // Get the actual width and height of the No button
+        const btnRect = noBtn.getBoundingClientRect();
+        const btnWidth = btnRect.width;
+        const btnHeight = btnRect.height;
+
+        // Calculate maximum allowed coordinates
+        // We subtract the button's size and an extra 20px "safety buffer"
+        const maxX = window.innerWidth - btnWidth - 20;
+        const maxY = window.innerHeight - btnHeight - 20;
+
+        // Pick a random spot, but ensure it's at least 20px away from the top/left
+        const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+        const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
         noBtn.style.zIndex = "10000";
     }
 }
 
-// 15 Second Set 1 Transition
+// 15-Second Slide Transition
 window.onload = () => {
     const s1 = document.querySelectorAll('.side-pic');
     const s2 = document.querySelectorAll('.side-pic-2');
