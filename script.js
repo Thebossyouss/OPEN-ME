@@ -18,48 +18,49 @@ function handleYesClick() {
 
 function handleNoClick() {
     noClickCount++;
+    
+    // 1. Update text if we still have messages left
     if (noClickCount < noMessages.length) {
         noBtn.textContent = noMessages[noClickCount];
     }
+    
+    // 2. Update the GIF mood
     catGif.src = gifStages[Math.min(noClickCount, gifStages.length - 1)];
     
-    // Yes button growth
+    // 3. Grow the Yes button (0.4 growth per click)
     const scale = 1 + (noClickCount * 0.4);
     yesBtn.style.transform = `scale(${scale})`;
+    yesBtn.style.transition = "transform 0.3s ease";
 
-    // DYNAMIC SCREEN CALCULATION
+    // 4. Move the No button inside the "Safe Zone"
     if (noClickCount >= 4) {
         noBtn.style.position = 'fixed';
+        const padding = 150; 
+        const x = Math.random() * (window.innerWidth - padding) + (padding / 2);
+        const y = Math.random() * (window.innerHeight - padding) + (padding / 2);
         
-        // Get the actual width and height of the No button
-        const btnRect = noBtn.getBoundingClientRect();
-        const btnWidth = btnRect.width;
-        const btnHeight = btnRect.height;
-
-        // Calculate maximum allowed coordinates
-        // We subtract the button's size and an extra 20px "safety buffer"
-        const maxX = window.innerWidth - btnWidth - 20;
-        const maxY = window.innerHeight - btnHeight - 20;
-
-        // Pick a random spot, but ensure it's at least 20px away from the top/left
-        const randomX = Math.max(20, Math.floor(Math.random() * maxX));
-        const randomY = Math.max(20, Math.floor(Math.random() * maxY));
-
-        noBtn.style.left = randomX + "px";
-        noBtn.style.top = randomY + "px";
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
         noBtn.style.zIndex = "10000";
     }
 }
 
-// 15-Second Slide Transition
+// 5. The 15-Second Transitions
 window.onload = () => {
     const s1 = document.querySelectorAll('.side-pic');
     const s2 = document.querySelectorAll('.side-pic-2');
     
+    // Wait exactly 15 seconds
     setTimeout(() => {
+        // Fade out set 1
         s1.forEach(p => p.classList.add('fade-out'));
+        
+        // After set 1 is invisible, fade in set 2
         setTimeout(() => {
-            s2.forEach(p => p.classList.add('fade-in'));
+            s2.forEach(p => {
+                p.style.display = "block"; // Double check visibility
+                p.classList.add('fade-in');
+            });
         }, 1500); 
     }, 15000); 
 };
