@@ -1,3 +1,4 @@
+/* --- GLOBAL RESET --- */
 * {
     margin: 0;
     padding: 0;
@@ -11,12 +12,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; 
+    overflow: hidden; /* Prevents scrollbars when button moves */
 }
 
+/* --- THE MAIN CONTAINER (BUTTON BOX) --- */
 .container {
     position: relative;
-    z-index: 1000; 
+    z-index: 1000; /* Higher than photos */
     text-align: center;
     background: rgba(255, 255, 255, 0.9); 
     padding: 40px;
@@ -25,43 +27,84 @@ body {
     width: 400px;
 }
 
-h1 { color: #d32f2f; margin-bottom: 20px; font-size: 1.8rem; }
+h1 {
+    color: #d32f2f;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
 
-
+/* --- THE BACKGROUND PICTURES (300PX) --- */
 .side-pic, .side-pic-2 {
     position: fixed !important;
     width: 300px !important;   
     height: 300px !important;  
+    
+    /* Center the photo inside the 300px square */
     object-fit: cover !important; 
+    object-position: center;
+    
     border: 8px solid white !important; 
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    z-index: 5; 
+    z-index: 5; /* Lower than container */
+    
+    /* Smooth transition for the 15s fade */
     transition: opacity 1.5s ease-in-out !important;
-    pointer-events: none;
+    pointer-events: none; /* Clicks go through photos to buttons */
 }
 
+/* Slideshow Logic */
 .side-pic { opacity: 1; }
 .side-pic-2 { opacity: 0; }
 .fade-out { opacity: 0 !important; }
 .fade-in { opacity: 1 !important; }
 
+/* --- PHOTO POSITIONS --- */
 .pic-1 { left: 20px; top: 20px; transform: rotate(-5deg); }
 .pic-2 { right: 20px; top: 20px; transform: rotate(5deg); }
 .pic-3 { left: 30px; bottom: 30px; transform: rotate(4deg); }
 .pic-4 { right: 30px; bottom: 30px; transform: rotate(-4deg); }
-.pic-5 { left: 50%; bottom: 20px; transform: translateX(-50%); opacity: 0.15 !important; }
 
-#cat-gif { width: 200px; height: 200px; margin-bottom: 20px; }
+/* The 5th photo (Center Background) */
+.pic-5 { 
+    left: 50%; 
+    bottom: 20px; 
+    transform: translateX(-50%); 
+    opacity: 0.15 !important; 
+    z-index: 1; 
+}
+
+/* --- GIF & BUTTONS --- */
+#cat-gif { 
+    width: 200px; 
+    height: 200px; 
+    margin-bottom: 20px; 
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
 
 #yes-btn { 
-    background: #4CAF50; color: white; border: none; padding: 15px 35px; 
-    border-radius: 12px; font-size: 1.4rem; cursor: pointer; 
+    background: #4CAF50; 
+    color: white; 
+    border: none; 
+    padding: 15px 35px; 
+    border-radius: 12px; 
+    font-size: 1.4rem; 
+    cursor: pointer; 
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 #no-btn { 
-    background: #e74c3c; color: white; border: none; padding: 12px 25px; 
-    border-radius: 10px; cursor: pointer; position: relative; 
-    transition: left 0.3s ease, top 0.3s ease;
+    background: #e74c3c; 
+    color: white; 
+    border: none; 
+    padding: 12px 25px; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    position: relative; 
+    transition: all 0.3s ease;
 }
