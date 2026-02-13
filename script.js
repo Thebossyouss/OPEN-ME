@@ -70,5 +70,5 @@ window.addEventListener('load', () => {
             });
         }, 800); 
 
-    }, 5000); 
+    }, 15000); 
 });
