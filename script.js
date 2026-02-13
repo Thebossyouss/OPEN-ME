@@ -13,60 +13,72 @@ const yesBtn = document.getElementById('yes-btn');
 const noBtn = document.getElementById('no-btn');
 const catGif = document.getElementById('cat-gif');
 
-// Music Fix
-document.addEventListener('click', () => {
+// --- MUSIC HELPER FUNCTION ---
+function playMusic() {
     if (music && music.paused) {
-        music.play().catch(err => console.log("Music playing..."));
+        music.play().catch(err => console.log("Music play attempt..."));
     }
+}
+
+// 1. Start music if she clicks anywhere on the background
+document.addEventListener('click', () => {
+    playMusic();
 }, { once: true });
 
 function handleYesClick() { 
+    playMusic(); // Ensure music plays on Yes
     window.location.href = 'yes.html'; 
 }
 
 function handleNoClick() {
+    playMusic(); // --- THE FIX: Music starts as soon as she clicks No ---
+    
     noClickCount++;
-    if (noClickCount < noMessages.length) noBtn.textContent = noMessages[noClickCount];
+    if (noClickCount < noMessages.length) {
+        noBtn.textContent = noMessages[noClickCount];
+    }
+    
     catGif.src = gifStages[Math.min(noClickCount, gifStages.length - 1)];
+    
+    // Grow Yes Button
     const scale = 1 + (noClickCount * 0.4);
     yesBtn.style.transform = `scale(${scale})`;
+    yesBtn.style.transition = "transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
 
+    // Runaway Logic with Screen Bounds
     if (noClickCount >= 4) {
         noBtn.style.position = 'fixed';
         const btnRect = noBtn.getBoundingClientRect();
         const maxX = window.innerWidth - btnRect.width - 20;
         const maxY = window.innerHeight - btnRect.height - 20;
-        noBtn.style.left = Math.max(20, Math.floor(Math.random() * maxX)) + "px";
-        noBtn.style.top = Math.max(20, Math.floor(Math.random() * maxY)) + "px";
+
+        const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+        const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
         noBtn.style.zIndex = "10000";
     }
 }
 
-// THE FORCED TRANSITION (15 SECONDS)
-window.addEventListener('load', () => {
-    const s1 = document.querySelectorAll('.side-pic');
-    const s2 = document.querySelectorAll('.side-pic-2');
-
-    // Ensure Set 2 is ready but invisible
-    s2.forEach(p => {
-        p.style.display = "block"; 
-        p.style.opacity = "0";
-    });
+// 15-Second Manual Transition
+window.onload = () => {
+    const set1 = document.querySelectorAll('.side-pic');
+    const set2 = document.querySelectorAll('.side-pic-2');
 
     setTimeout(() => {
-        // 1. Force Set 1 to vanish
-        s1.forEach(p => {
-            p.style.transition = "opacity 2s ease";
-            p.style.opacity = "0";
+        // Fade Out Set 1
+        set1.forEach(img => {
+            img.style.transition = "opacity 2s ease";
+            img.style.opacity = "0";
+            setTimeout(() => { img.style.visibility = "hidden"; }, 2000);
         });
-        
-        // 2. Force Set 2 to appear after a 1-second delay
-        setTimeout(() => {
-            s2.forEach(p => {
-                p.style.transition = "opacity 2s ease";
-                p.style.opacity = "1";
-            });
-        }, 1000); 
 
+        // Fade In Set 2
+        set2.forEach(img => {
+            img.style.visibility = "visible";
+            img.style.transition = "opacity 2s ease";
+            setTimeout(() => { img.style.opacity = "1"; }, 50);
+        });
     }, 15000); 
-});
+};
