@@ -23,24 +23,24 @@ function handleNoClick() {
     }
     catGif.src = gifStages[Math.min(noClickCount, gifStages.length - 1)];
     
-    // Yes button grows
+    // Yes button growth
     const scale = 1 + (noClickCount * 0.4);
     yesBtn.style.transform = `scale(${scale})`;
 
-    // Runaway Logic with Safe Zone (stays on screen)
+    // Percentage-based movement so it never leaves the screen
     if (noClickCount >= 4) {
         noBtn.style.position = 'fixed';
-        const padding = 150; // Keeps it away from edges
-        const x = Math.random() * (window.innerWidth - padding) + (padding / 2);
-        const y = Math.random() * (window.innerHeight - padding) + (padding / 2);
+        // Bounds the button between 10% and 80% of the screen width/height
+        const randomX = Math.floor(Math.random() * 70) + 10; 
+        const randomY = Math.floor(Math.random() * 70) + 10; 
         
-        noBtn.style.left = `${x}px`;
-        noBtn.style.top = `${y}px`;
+        noBtn.style.left = randomX + "vw";
+        noBtn.style.top = randomY + "vh";
         noBtn.style.zIndex = "10000";
     }
 }
 
-// 15 Second Transitions
+// 15 Second Set 1 Transition
 window.onload = () => {
     const s1 = document.querySelectorAll('.side-pic');
     const s2 = document.querySelectorAll('.side-pic-2');
@@ -50,5 +50,5 @@ window.onload = () => {
         setTimeout(() => {
             s2.forEach(p => p.classList.add('fade-in'));
         }, 1500); 
-    }, 15000); // Set to 15 seconds
+    }, 15000); 
 };
