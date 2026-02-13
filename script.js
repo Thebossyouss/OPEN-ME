@@ -5,6 +5,7 @@ const gifStages = [
     "https://media.tenor.com/OGY9zdREsVAAAAAj/somsom1012.gif",
     "https://media1.tenor.com/m/uDugCXK4vI4AAAAC/chiikawa-hachiware.gif"
 ];
+
 const noMessages = ["No", "Are you sure? 🥺", "Pookie please...", "😢", "You can't catch me!"];
 
 let noClickCount = 0;
@@ -13,27 +14,35 @@ const yesBtn = document.getElementById('yes-btn');
 const noBtn = document.getElementById('no-btn');
 const catGif = document.getElementById('cat-gif');
 
-// --- MUSIC HELPER FUNCTION ---
-function playMusic() {
-    if (music && music.paused) {
-        music.play().catch(err => console.log("Music play attempt..."));
-    }
+// --- SMART MUSIC HANDLING (FROM YOUR VERSION) ---
+// Try to play muted first to bypass browser blocks
+if (music) {
+    music.muted = true;
+    music.volume = 0.4;
+    music.play().then(() => {
+        // If successful, unmute on first click
+        document.addEventListener('click', () => {
+            music.muted = false;
+        }, { once: true });
+    }).catch(() => {
+        // If blocked, wait for first click to play and unmute
+        document.addEventListener('click', () => {
+            music.muted = false;
+            music.play();
+        }, { once: true });
+    });
 }
 
-// 1. Start music if she clicks anywhere on the background
-document.addEventListener('click', () => {
-    playMusic();
-}, { once: true });
-
 function handleYesClick() { 
-    playMusic(); // Ensure music plays on Yes
     window.location.href = 'yes.html'; 
 }
 
 function handleNoClick() {
-    playMusic(); // --- THE FIX: Music starts as soon as she clicks No ---
-    
     noClickCount++;
+    
+    // Ensure music is unmuted if she clicks 'No'
+    if (music) music.muted = false;
+
     if (noClickCount < noMessages.length) {
         noBtn.textContent = noMessages[noClickCount];
     }
@@ -43,9 +52,8 @@ function handleNoClick() {
     // Grow Yes Button
     const scale = 1 + (noClickCount * 0.4);
     yesBtn.style.transform = `scale(${scale})`;
-    yesBtn.style.transition = "transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
 
-    // Runaway Logic with Screen Bounds
+    // Runaway Logic (Stay on screen)
     if (noClickCount >= 4) {
         noBtn.style.position = 'fixed';
         const btnRect = noBtn.getBoundingClientRect();
@@ -61,7 +69,7 @@ function handleNoClick() {
     }
 }
 
-// 15-Second Manual Transition
+// --- PHOTO SLIDESHOW (15-SECOND CROSSFADE) ---
 window.onload = () => {
     const set1 = document.querySelectorAll('.side-pic');
     const set2 = document.querySelectorAll('.side-pic-2');
