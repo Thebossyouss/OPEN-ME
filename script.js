@@ -8,19 +8,9 @@ const gifStages = [
 const noMessages = ["No", "Are you sure? 🥺", "Pookie please...", "😢", "You can't catch me!"];
 
 let noClickCount = 0;
-const music = document.getElementById('bg-music');
 const yesBtn = document.getElementById('yes-btn');
 const noBtn = document.getElementById('no-btn');
 const catGif = document.getElementById('cat-gif');
-
-// Music fix: Unmute/Play on first interaction
-document.addEventListener('click', () => {
-    music.play().catch(() => {});
-}, { once: true });
-
-function toggleMusic() {
-    if (music.paused) { music.play(); } else { music.pause(); }
-}
 
 function handleYesClick() { 
     window.location.href = 'yes.html'; 
@@ -31,22 +21,20 @@ function handleNoClick() {
     if (noClickCount < noMessages.length) {
         noBtn.textContent = noMessages[noClickCount];
     }
-    // Change GIF
     catGif.src = gifStages[Math.min(noClickCount, gifStages.length - 1)];
-    // Grow Yes Button
-    const size = 1 + (noClickCount * 0.3);
-    yesBtn.style.transform = `scale(${size})`;
-    // Runaway Logic
+    
+    const scale = 1 + (noClickCount * 0.3);
+    yesBtn.style.transform = `scale(${scale})`;
+
     if (noClickCount >= 4) {
         noBtn.style.position = 'fixed';
-        const x = Math.random() * (window.innerWidth - 100);
-        const y = Math.random() * (window.innerHeight - 50);
+        const x = Math.random() * (window.innerWidth - 150);
+        const y = Math.random() * (window.innerHeight - 100);
         noBtn.style.left = x + 'px';
         noBtn.style.top = y + 'px';
     }
 }
 
-// Slideshow Logic
 window.onload = () => {
     const s1 = document.querySelectorAll('.side-pic');
     const s2 = document.querySelectorAll('.side-pic-2');
