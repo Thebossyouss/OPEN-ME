@@ -1,9 +1,4 @@
-/* --- GLOBAL RESET --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     background-color: #FFE4E8;
@@ -12,45 +7,28 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* This is important so scrollbars don't appear when the button moves */
-    overflow: hidden; 
+    overflow: hidden;
 }
 
-h1 {
-    margin-bottom: 20px;
-    color: #d32f2f;
-}
-
-/* --- THE MAIN CONTAINER --- */
 .container {
     position: relative;
-    /* z-index: 1000 ensures the buttons are ALWAYS on top of the background pictures */
     z-index: 1000; 
     text-align: center;
     background: rgba(255, 255, 255, 0.85); 
     padding: 40px;
     border-radius: 30px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    /* Ensures it fits on mobile screens */
     max-width: 90%; 
 }
 
-/* --- THE BACKGROUND PICTURES (FIXED SIZE) --- */
+/* --- LARGE RESPONSIVE PICTURES --- */
 .side-pic, .side-pic-2 {
     position: fixed !important;
-    
-    /* --- THE FIX IS HERE --- */
-    /* Instead of 800px, we use 35% of the screen width */
     width: 35vw !important;    
-    /* But don't let them get bigger than 500px on huge monitors */
-    max-width: 500px; 
-    /* Don't let them get too tiny on phones */
-    min-width: 150px; 
-    /* This keeps them perfectly square */
+    max-width: 480px; 
+    min-width: 180px; 
     aspect-ratio: 1/1;
     height: auto !important;   
-    /* ----------------------- */
-
     object-fit: cover !important; 
     border: 10px solid white !important; 
     box-shadow: 0 20px 50px rgba(0,0,0,0.3);
@@ -58,7 +36,18 @@ h1 {
     transition: opacity 1.5s ease;
 }
 
-/* Slideshow Animation States */
 .side-pic { opacity: 1; }
 .side-pic-2 { opacity: 0; }
-.fade
+.fade-out { opacity: 0 !important; pointer-events: none; }
+.fade-in { opacity: 1 !important; visibility: visible !important; }
+
+/* POSITIONS */
+.pic-1 { left: -5vw; top: -5vh; transform: rotate(-10deg); }
+.pic-2 { right: -5vw; top: -5vh; transform: rotate(10deg); }
+.pic-3 { left: -8vw; bottom: -5vh; transform: rotate(5deg); }
+.pic-4 { right: -8vw; bottom: -5vh; transform: rotate(-8deg); }
+.pic-5 { left: 50%; bottom: -12vh; transform: translateX(-50%) rotate(2deg); opacity: 0.3 !important; z-index: 1; }
+
+#cat-gif { width: 200px; height: 200px; margin-bottom: 20px; }
+#yes-btn { background: #4CAF50; color: white; border: none; padding: 15px 40px; border-radius: 15px; font-size: 1.5rem; cursor: pointer; transition: transform 0.2s; }
+#no-btn { background: #e74c3c; color: white; border: none; padding: 10px 25px; border-radius: 10px; cursor: pointer; position: relative; }
