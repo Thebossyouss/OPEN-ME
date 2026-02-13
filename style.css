@@ -1,4 +1,8 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     background-color: #FFE4E8;
@@ -23,6 +27,7 @@ body {
 
 h1 { color: #d32f2f; margin-bottom: 20px; font-size: 1.8rem; }
 
+
 .side-pic, .side-pic-2 {
     position: fixed !important;
     width: 300px !important;   
@@ -33,7 +38,7 @@ h1 { color: #d32f2f; margin-bottom: 20px; font-size: 1.8rem; }
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     z-index: 5; 
     transition: opacity 1.5s ease-in-out !important;
-    pointer-events: none; /* Clicks go through photos to buttons */
+    pointer-events: none;
 }
 
 .side-pic { opacity: 1; }
@@ -41,7 +46,6 @@ h1 { color: #d32f2f; margin-bottom: 20px; font-size: 1.8rem; }
 .fade-out { opacity: 0 !important; }
 .fade-in { opacity: 1 !important; }
 
-/* Photo Positions */
 .pic-1 { left: 20px; top: 20px; transform: rotate(-5deg); }
 .pic-2 { right: 20px; top: 20px; transform: rotate(5deg); }
 .pic-3 { left: 30px; bottom: 30px; transform: rotate(4deg); }
@@ -59,5 +63,5 @@ h1 { color: #d32f2f; margin-bottom: 20px; font-size: 1.8rem; }
 #no-btn { 
     background: #e74c3c; color: white; border: none; padding: 12px 25px; 
     border-radius: 10px; cursor: pointer; position: relative; 
-    transition: all 0.3s ease;
+    transition: left 0.3s ease, top 0.3s ease;
 }
