@@ -1,47 +1,79 @@
-/* --- THE BACKGROUND PICTURES (FIXED AT 300PX) --- */
+/* --- GLOBAL RESET --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #FFE4E8;
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+}
+
+/* --- THE MAIN CONTAINER (BUTTON BOX) --- */
+.container {
+    position: absolute; /* Changed to absolute to lock in center */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999 !important; /* Forces buttons to the front */
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9); 
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 350px;
+    pointer-events: auto; /* Ensures you can click the buttons */
+}
+
+/* --- THE PICTURES (300PX) --- */
 .side-pic, .side-pic-2 {
     position: fixed !important;
-    
-    /* Strict size limits */
     width: 300px !important;   
     height: 300px !important;  
-    max-width: 300px !important;
-    max-height: 300px !important;
-    
-    /* This ensures they stay square even if the image is a rectangle */
     object-fit: cover !important; 
-    
-    /* Design details */
     border: 8px solid white !important; 
     border-radius: 15px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    
-    /* Keeps them behind your buttons */
-    z-index: 5; 
-    
-    /* Syncs with your script.js transition */
+    z-index: 1; /* Keeps photos BEHIND the buttons */
+    pointer-events: none; /* Crucial: clicks go through photos to buttons */
     transition: opacity 1.5s ease-in-out !important;
-    pointer-events: none; /* Allows you to click "Yes" even if a photo is on top */
 }
 
-/* --- POSITIONS: Moved to the absolute corners --- */
-.pic-1 { left: 20px; top: 20px; transform: rotate(-6deg); }
-.pic-2 { right: 20px; top: 20px; transform: rotate(6deg); }
-.pic-3 { left: 30px; bottom: 30px; transform: rotate(4deg); }
-.pic-4 { right: 30px; bottom: 30px; transform: rotate(-5deg); }
+/* Position photos far in the corners */
+.pic-1 { left: 10px; top: 10px; transform: rotate(-5deg); }
+.pic-2 { right: 10px; top: 10px; transform: rotate(5deg); }
+.pic-3 { left: 10px; bottom: 10px; transform: rotate(3deg); }
+.pic-4 { right: 10px; bottom: 10px; transform: rotate(-3deg); }
 
-/* The 5th photo stays very light in the center background */
+/* Centered photo set to background depth */
 .pic-5 { 
     left: 50%; 
     top: 50%; 
-    transform: translate(-50%, -50%) rotate(2deg); 
+    transform: translate(-50%, -50%); 
     opacity: 0.1 !important; 
-    z-index: 1;
+    z-index: 0; 
 }
 
-/* --- TRANSITION STATES --- */
+/* Animation States */
 .side-pic { opacity: 1; visibility: visible; }
 .side-pic-2 { opacity: 0; visibility: hidden; }
-
 .fade-out { opacity: 0 !important; visibility: hidden !important; }
 .fade-in { opacity: 1 !important; visibility: visible !important; }
+
+/* Button Styling */
+#yes-btn, #no-btn {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    margin: 10px;
+}
+#yes-btn { background-color: #4CAF50; color: white; }
+#no-btn { background-color: #e74c3c; color: white; }
