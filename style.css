@@ -1,229 +1,82 @@
 /* --- GLOBAL RESET --- */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    background-color: #FFE4E8;
-    font-family: 'Nunito', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* This is important so scrollbars don't appear when the button moves */
-    overflow: hidden; 
-}
-
-h1 {
-    margin-bottom: 20px;
-    color: #d32f2f;
+    background-color: #FFE4E8;
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
 }
 
 /* --- THE MAIN CONTAINER --- */
 .container {
-    position: relative;
-    /* z-index: 1000 ensures the buttons are ALWAYS on top of the background pictures */
-    z-index: 1000; 
-    text-align: center;
-    background: rgba(255, 255, 255, 0.85); 
-    padding: 40px;
-    border-radius: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    /* Ensures it fits on mobile screens */
-    max-width: 90%; 
+    position: relative;
+    /* Keeps buttons and text above the 300px photos */
+    z-index: 1000; 
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9); 
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    max-width: 450px; /* Keeps the center neat */
 }
 
-/* --- THE BACKGROUND PICTURES (FIXED SIZE) --- */
+/* --- THE BACKGROUND PICTURES (300PX) --- */
 .side-pic, .side-pic-2 {
-    position: fixed !important;
-    
-    /* --- THE FIX IS HERE --- */
-    /* Instead of 800px, we use 35% of the screen width */
-    width: 35vw !important;    
-    /* But don't let them get bigger than 500px on huge monitors */
-    max-width: 500px; 
-    /* Don't let them get too tiny on phones */
-    min-width: 150px; 
-    /* This keeps them perfectly square */
-    aspect-ratio: 1/1;
-    height: auto !important;   
-    /* ----------------------- */
-
-    object-fit: cover !important; 
-    border: 10px solid white !important; 
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    z-index: 5; 
-    transition: opacity 1.5s ease;
+    position: fixed !important;
+    width: 300px !important;   /* Exactly 300px as requested */
+    height: 300px !important;  
+    object-fit: cover !important; 
+    border: 8px solid white !important; 
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    z-index: 5; /* Stays behind the container */
+    
+    /* Perfect transition sync for your JS */
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out !important;
+    pointer-events: none; /* Maii can click "Yes" even if a photo corner overlaps */
 }
 
-/* Slideshow Animation States */
-.side-pic { opacity: 1; }
-.side-pic-2 { opacity: 0; }
-.fade                                                                                   <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAII .....Will you be my Valentine? 💕</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        /* CSS IS NOW INSIDE THE HTML TO FORCE IT TO WORK */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background-color: #FFE4E8;
-            font-family: 'Nunito', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+/* Initial Visibility States */
+.side-pic { opacity: 1; visibility: visible; }
+.side-pic-2 { opacity: 0; visibility: hidden; }
 
-        .container {
-            position: relative;
-            z-index: 1000; 
-            text-align: center;
-            background: rgba(255, 255, 255, 0.8); 
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        /* FORCE 800PX SIZE */
-        .side-pic, .side-pic-2 {
-            position: fixed !important;
-            width: 800px !important;   
-            height: 800px !important;  
-            object-fit: cover !important; 
-            border: 15px solid white !important; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            z-index: 5; 
-            transition: opacity 1.5s ease;
-        }
-
-        .side-pic { opacity: 1; }
-        .side-pic-2 { opacity: 0; }
-        .fade-out { opacity: 0 !important; }
-        .fade-in { opacity: 1 !important; }
-
-        /* GIANT POSITIONS */
-        .pic-1 { left: -200px; top: -150px; transform: rotate(-10deg); }
-        .pic-2 { right: -200px; top: -150px; transform: rotate(10deg); }
-        .pic-3 { left: -250px; bottom: -200px; transform: rotate(5deg); }
-        .pic-4 { right: -250px; bottom: -200px; transform: rotate(-8deg); }
-        .pic-5 { left: 50%; top: 50%; transform: translate(-50%, -50%); opacity: 0.2 !important; z-index: 1; }
-        
-        #cat-gif { width: 200px; height: 200px; }
-        #yes-btn { background: #4CAF50; color: white; border: none; padding: 15px 40px; border-radius: 15px; font-size: 1.5rem; cursor: pointer; }
-        #no-btn { background: #e74c3c; color: white; border: none; padding: 10px 25px; border-radius: 10px; cursor: pointer; position: relative; }
-    </style>
-</head>
-<body>
-    <div class="hearts-bg">
-        <img src="https://drive.google.com/thumbnail?id=1pFuFTsRK-9gPNzFLzKF6B6XSNRE-mBva&sz=w1000" class="side-pic pic-1">
-        <img src="https://drive.google.com/thumbnail?id=1rB3pT_SghVvrMp-PFwNlbMloWpnlv2ZW&sz=w1000" class="side-pic pic-2">
-        <img src="https://drive.google.com/thumbnail?id=1KjjI4PWjn85tHKvTZPAxoleXuYlklvNJ&sz=w1000" class="side-pic pic-3">
-        <img src="https://drive.google.com/thumbnail?id=1x9OjCrRcAyvUB0eI3bas6Ln_KrC6uxeD&sz=w1000" class="side-pic pic-4">
-        <img src="https://drive.google.com/thumbnail?id=1VPOIMzH757v7wa1wfGOstBhvxDRU9rcK&sz=w1000" class="side-pic pic-5">
-
-        <img src="https://drive.google.com/thumbnail?id=1Hp34YMI3MDTDZfjKlSsHVpK4ak_F5ThY&sz=w1000" class="side-pic-2 pic-1">
-        <img src="https://drive.google.com/thumbnail?id=1rM35MOCNFO5zIIcQUWaBUD1v8efBzUud&sz=w1000" class="side-pic-2 pic-2">
-        <img src="https://drive.google.com/thumbnail?id=1ZX23rqZGC5EvDa2tyNWttzcrN2ydjE2a&sz=w1000" class="side-pic-2 pic-3">
-        <img src="https://drive.google.com/thumbnail?id=1kZU8TGeQj832z_If1LFeG1yIKdFndGZh&sz=w1000" class="side-pic-2 pic-4">
-        <img src="https://drive.google.com/thumbnail?id=1-R8pSoWjl-B8ExgZilDMjd6mYVudH_iY&sz=w1000" class="side-pic-2 pic-5">
-    </div>
-
-    <div class="container">
-        <h1>MAII .....Will you be my Valentine? 💕</h1>
-        <div class="gif-container">
-            <img id="cat-gif" src="https://media.tenor.com/EBV7OT7ACfwAAAAj/u-u-qua-qua-u-quaa.gif">
-        </div>
-        <div class="buttons">
-            <button id="yes-btn" onclick="handleYesClick()">Yes</button>
-            <button id="no-btn" onclick="handleNoClick()">No</button>
-        </div>
-    </div>
-
-    <script>
-        // JAVASCRIPT IS NOW INSIDE THE HTML
-        function handleYesClick() { window.location.href = 'yes.html'; }
-        function handleNoClick() {
-            const noBtn = document.getElementById('no-btn');
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            noBtn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
-        }
-
-        window.onload = () => {
-            const s1 = document.querySelectorAll('.side-pic');
-            const s2 = document.querySelectorAll('.side-pic-2');
-            setTimeout(() => {
-                s1.forEach(p => p.classList.add('fade-out'));
-                setTimeout(() => {
-                    s2.forEach(p => p.classList.add('fade-in'));
-                }, 1500);
-            }, 5000);
-        };
-    </script>
-</body>
-</html>                           const gifStages = [
-    "https://media.tenor.com/EBV7OT7ACfwAAAAj/u-u-qua-qua-u-quaa.gif",
-    "https://media1.tenor.com/m/uDugCXK4vI4AAAAd/chiikawa-hachiware.gif",
-    "https://media.tenor.com/f_rkpJbH1s8AAAAj/somsom1012.gif",
-    "https://media.tenor.com/OGY9zdREsVAAAAAj/somsom1012.gif",
-    "https://media1.tenor.com/m/uDugCXK4vI4AAAAC/chiikawa-hachiware.gif"
-];
-const noMessages = ["No", "Are you sure? 🥺", "Pookie please...", "😢", "You can't catch me!"];
-
-let noClickCount = 0;
-const music = document.getElementById('bg-music');
-const yesBtn = document.getElementById('yes-btn');
-const noBtn = document.getElementById('no-btn');
-const catGif = document.getElementById('cat-gif');
-
-// Music fix: Unmute/Play on first interaction
-document.addEventListener('click', () => {
-    music.play().catch(() => {});
-}, { once: true });
-
-function toggleMusic() {
-    if (music.paused) { music.play(); } else { music.pause(); }
+/* Transition Classes handled by your script.js */
+.fade-out { 
+    opacity: 0 !important; 
+    visibility: hidden !important; 
+}
+.fade-in { 
+    opacity: 1 !important; 
+    visibility: visible !important; 
 }
 
-function handleYesClick() { 
-    window.location.href = 'yes.html'; 
+/* --- POSITIONS: Tucked into Corners --- */
+.pic-1 { left: 20px; top: 20px; transform: rotate(-6deg); }
+.pic-2 { right: 20px; top: 20px; transform: rotate(6deg); }
+.pic-3 { left: 30px; bottom: 30px; transform: rotate(4deg); }
+.pic-4 { right: 30px; bottom: 30px; transform: rotate(-5deg); }
+
+/* The 5th photo - floating slightly behind the container */
+.pic-5 { 
+    left: 50%; 
+    top: 50%; 
+    transform: translate(-50%, -50%) rotate(2deg); 
+    opacity: 0.15 !important; /* Kept very light so it doesn't distract */
+    z-index: 1;
 }
 
-function handleNoClick() {
-    noClickCount++;
-    if (noClickCount < noMessages.length) {
-        noBtn.textContent = noMessages[noClickCount];
-    }
-    // Change GIF
-    catGif.src = gifStages[Math.min(noClickCount, gifStages.length - 1)];
-    // Grow Yes Button
-    const size = 1 + (noClickCount * 0.3);
-    yesBtn.style.transform = `scale(${size})`;
-    // Runaway Logic
-    if (noClickCount >= 4) {
-        noBtn.style.position = 'fixed';
-        const x = Math.random() * (window.innerWidth - 100);
-        const y = Math.random() * (window.innerHeight - 50);
-        noBtn.style.left = x + 'px';
-        noBtn.style.top = y + 'px';
-    }
+/* --- MOBILE FIX --- */
+@media (max-width: 850px) {
+    .side-pic, .side-pic-2 {
+        width: 150px !important; /* Shrinks on phones so it's not "massive" there */
+        height: 150px !important;
+    }
 }
-
-// Slideshow Logic
-window.onload = () => {
-    const s1 = document.querySelectorAll('.side-pic');
-    const s2 = document.querySelectorAll('.side-pic-2');
-    setTimeout(() => {
-        s1.forEach(p => p.classList.add('fade-out'));
-        setTimeout(() => {
-            s2.forEach(p => p.classList.add('fade-in'));
-        }, 1500);
-    }, 5000);
-};
