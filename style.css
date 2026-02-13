@@ -1,53 +1,44 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-    background-color: #FFE4E8;
-    font-family: 'Nunito', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.container {
-    position: relative;
-    z-index: 1000; 
-    text-align: center;
-    background: rgba(255, 255, 255, 0.85); 
-    padding: 40px;
-    border-radius: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    max-width: 90%; 
-}
-
-/* --- LARGE RESPONSIVE PICTURES --- */
+/* --- FIXED PHOTO STYLING --- */
 .side-pic, .side-pic-2 {
     position: fixed !important;
-    width: 35vw !important;    
-    max-width: 480px; 
-    min-width: 180px; 
-    aspect-ratio: 1/1;
-    height: auto !important;   
+    width: 280px !important;   /* Fixed size instead of percentage */
+    height: 280px !important;  
     object-fit: cover !important; 
-    border: 10px solid white !important; 
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    border: 8px solid white !important; 
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     z-index: 5; 
     transition: opacity 1.5s ease;
 }
 
+/* Set 1 Visibility */
 .side-pic { opacity: 1; }
 .side-pic-2 { opacity: 0; }
+
+/* Animation Classes */
 .fade-out { opacity: 0 !important; pointer-events: none; }
 .fade-in { opacity: 1 !important; visibility: visible !important; }
 
-/* POSITIONS */
-.pic-1 { left: -5vw; top: -5vh; transform: rotate(-10deg); }
-.pic-2 { right: -5vw; top: -5vh; transform: rotate(10deg); }
-.pic-3 { left: -8vw; bottom: -5vh; transform: rotate(5deg); }
-.pic-4 { right: -8vw; bottom: -5vh; transform: rotate(-8deg); }
-.pic-5 { left: 50%; bottom: -12vh; transform: translateX(-50%) rotate(2deg); opacity: 0.3 !important; z-index: 1; }
+/* --- POSITIONS: Tucked into the actual corners --- */
+.pic-1 { left: 20px; top: 20px; transform: rotate(-6deg); }
+.pic-2 { right: 20px; top: 20px; transform: rotate(6deg); }
+.pic-3 { left: 25px; bottom: 20px; transform: rotate(4deg); }
+.pic-4 { right: 25px; bottom: 20px; transform: rotate(-5deg); }
 
-#cat-gif { width: 200px; height: 200px; margin-bottom: 20px; }
-#yes-btn { background: #4CAF50; color: white; border: none; padding: 15px 40px; border-radius: 15px; font-size: 1.5rem; cursor: pointer; transition: transform 0.2s; }
-#no-btn { background: #e74c3c; color: white; border: none; padding: 10px 25px; border-radius: 10px; cursor: pointer; position: relative; }
+/* The 5th photo stays at the bottom center, but moved down slightly */
+.pic-5 { 
+    left: 50%; 
+    bottom: -50px; 
+    transform: translateX(-50%) rotate(2deg); 
+    opacity: 0.4 !important; /* Kept light so buttons are easy to see */
+    z-index: 1;
+}
+
+/* --- MOBILE FIX --- */
+@media (max-width: 768px) {
+    .side-pic, .side-pic-2 {
+        width: 140px !important; /* Half size for mobile phones */
+        height: 140px !important;
+        border-width: 4px !important;
+    }
+}
