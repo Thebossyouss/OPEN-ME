@@ -1,50 +1,25 @@
-/* --- CLASSIC POLAROID PHOTO STYLING --- */
+/* --- EMERGENCY RESET STYLE --- */
 .side-pic, .side-pic-2 {
     position: fixed !important;
-    width: 200px !important;   /* Smaller, compact size */
-    height: 200px !important;  
+    width: 180px !important;   /* Making them even smaller to be safe */
+    height: 180px !important;  
     object-fit: cover !important; 
-    border: 6px solid white !important; 
-    border-radius: 5px;
+    border: 5px solid white !important; 
+    outline: 2px solid red !important; /* TEMP: If you see red, the code is working! */
+    border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     z-index: 5; 
     transition: opacity 1.5s ease;
 }
 
-/* Set 1 Visibility */
+/* Positions - brought even further into the screen */
+.pic-1 { left: 50px; top: 50px; transform: rotate(-5deg); }
+.pic-2 { right: 50px; top: 50px; transform: rotate(5deg); }
+.pic-3 { left: 50px; bottom: 50px; transform: rotate(4deg); }
+.pic-4 { right: 50px; bottom: 50px; transform: rotate(-4deg); }
+.pic-5 { left: 50%; bottom: 30px; transform: translateX(-50%); opacity: 0.5 !important; }
+
 .side-pic { opacity: 1; }
 .side-pic-2 { opacity: 0; }
-
-/* Animation Classes */
 .fade-out { opacity: 0 !important; pointer-events: none; }
 .fade-in { opacity: 1 !important; visibility: visible !important; }
-
-/* --- POSITIONS: BROUGHT INSIDE THE SCREEN --- */
-/* We use small positive numbers so they sit neatly inside the corners */
-.pic-1 { left: 40px; top: 40px; transform: rotate(-5deg); }
-.pic-2 { right: 40px; top: 40px; transform: rotate(5deg); }
-.pic-3 { left: 40px; bottom: 40px; transform: rotate(4deg); }
-.pic-4 { right: 40px; bottom: 40px; transform: rotate(-4deg); }
-
-/* The 5th photo - moved up so it's fully visible at the bottom */
-.pic-5 { 
-    left: 50%; 
-    bottom: 20px; 
-    transform: translateX(-50%) rotate(2deg); 
-    opacity: 0.5 !important; 
-    z-index: 1;
-}
-
-/* --- MOBILE RESPONSIVENESS --- */
-@media (max-width: 768px) {
-    .side-pic, .side-pic-2 {
-        width: 120px !important; 
-        height: 120px !important;
-        /* Move them even closer to corners on small screens */
-        left: 10px !important;
-        right: 10px !important;
-    }
-    .pic-1, .pic-2 { top: 10px !important; }
-    .pic-3, .pic-4 { bottom: 10px !important; }
-    .pic-5 { display: none; } /* Hide the 5th one on mobile to save space */
-}
