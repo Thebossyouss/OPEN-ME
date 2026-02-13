@@ -38,18 +38,21 @@ function handleNoClick() {
         const maxY = window.innerHeight - btnRect.height - 20;
         noBtn.style.left = Math.max(20, Math.floor(Math.random() * maxX)) + "px";
         noBtn.style.top = Math.max(20, Math.floor(Math.random() * maxY)) + "px";
+        noBtn.style.zIndex = "10000";
     }
 }
 
-// FORCED TRANSITION LOGIC
+// THE FORCED TRANSITION (15 SECONDS)
 window.addEventListener('load', () => {
     const s1 = document.querySelectorAll('.side-pic');
     const s2 = document.querySelectorAll('.side-pic-2');
 
-    // Make sure Set 2 is totally hidden at the start
-    s2.forEach(p => { p.style.opacity = "0"; p.style.display = "block"; });
+    // Ensure Set 2 is ready but invisible
+    s2.forEach(p => {
+        p.style.display = "block"; 
+        p.style.opacity = "0";
+    });
 
-    // After 15 seconds...
     setTimeout(() => {
         // 1. Force Set 1 to vanish
         s1.forEach(p => {
@@ -57,7 +60,7 @@ window.addEventListener('load', () => {
             p.style.opacity = "0";
         });
         
-        // 2. Force Set 2 to appear
+        // 2. Force Set 2 to appear after a 1-second delay
         setTimeout(() => {
             s2.forEach(p => {
                 p.style.transition = "opacity 2s ease";
