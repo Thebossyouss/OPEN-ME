@@ -8,9 +8,17 @@ const gifStages = [
 const noMessages = ["No", "Are you sure? 🥺", "Pookie please...", "😢", "You can't catch me!"];
 
 let noClickCount = 0;
+const music = document.getElementById('bg-music');
 const yesBtn = document.getElementById('yes-btn');
 const noBtn = document.getElementById('no-btn');
 const catGif = document.getElementById('cat-gif');
+
+// MUSIC FIX: Starts as soon as Maii clicks anywhere on the page
+document.addEventListener('click', () => {
+    if (music && music.paused) {
+        music.play().catch(err => console.log("Music waiting for interaction..."));
+    }
+}, { once: true });
 
 function handleYesClick() { 
     window.location.href = 'yes.html'; 
@@ -27,21 +35,13 @@ function handleNoClick() {
     const scale = 1 + (noClickCount * 0.4);
     yesBtn.style.transform = `scale(${scale})`;
 
-    // DYNAMIC SCREEN CALCULATION
+    // No Button Runaway Logic
     if (noClickCount >= 4) {
         noBtn.style.position = 'fixed';
-        
-        // Get the actual width and height of the No button
         const btnRect = noBtn.getBoundingClientRect();
-        const btnWidth = btnRect.width;
-        const btnHeight = btnRect.height;
+        const maxX = window.innerWidth - btnRect.width - 20;
+        const maxY = window.innerHeight - btnRect.height - 20;
 
-        // Calculate maximum allowed coordinates
-        // We subtract the button's size and an extra 20px "safety buffer"
-        const maxX = window.innerWidth - btnWidth - 20;
-        const maxY = window.innerHeight - btnHeight - 20;
-
-        // Pick a random spot, but ensure it's at least 20px away from the top/left
         const randomX = Math.max(20, Math.floor(Math.random() * maxX));
         const randomY = Math.max(20, Math.floor(Math.random() * maxY));
 
